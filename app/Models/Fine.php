@@ -12,7 +12,9 @@ class Fine extends Model
     /**
      * Denda per hari Rp 1.000
      */
-    const DAILY_FINE = 1000;
+    const DAILY_FINE = 5000;
+    const DAMAGE_PERCENT = 0.50;
+    const LOST_PERCENT = 1.00;
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +23,13 @@ class Fine extends Model
      */
     protected $fillable = [
         'loan_id',
+        'user_id',
+        'category',
         'amount',
+        'days_late',
         'payment_status',
+        'payment_method',
+        'payment_date',
     ];
 
     /**
@@ -32,6 +39,7 @@ class Fine extends Model
      */
     protected $casts = [
         'amount' => 'decimal:2',
+        'payment_date' => 'date',
     ];
 
     /**
@@ -40,5 +48,13 @@ class Fine extends Model
     public function loan()
     {
         return $this->belongsTo(Loan::class);
+    }
+
+    /**
+     * Get the user (borrower) associated with the fine.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

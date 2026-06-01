@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password', 'nim', 'role'])]
+#[Fillable(['name', 'email', 'password', 'nim', 'phone_number', 'study_program', 'address', 'role', 'photo'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -38,5 +38,13 @@ class User extends Authenticatable
     public function loans()
     {
         return $this->hasMany(Loan::class);
+    }
+
+    /**
+     * Get the fines for the user.
+     */
+    public function fines()
+    {
+        return $this->hasMany(Fine::class);
     }
 }

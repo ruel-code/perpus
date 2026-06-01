@@ -12,10 +12,11 @@ class LoanSeeder extends Seeder
 {
     public function run(): void
     {
-        $users = User::where('role', 'mahasiswa')->get();
+        $users = User::where('role', 'user')->get();
         $books = Book::all();
+        $staff = User::where('role', 'admin')->get();
 
-        if ($users->isEmpty() || $books->isEmpty()) return;
+        if ($users->isEmpty() || $books->isEmpty() || $staff->isEmpty()) return;
 
         // 5 Data Dipinjam (Batas masih depan)
         for ($i = 1; $i <= 5; $i++) {
@@ -28,6 +29,8 @@ class LoanSeeder extends Seeder
                     'loan_date' => Carbon::now()->subDays(2),
                     'return_date' => Carbon::now()->addDays(5),
                     'status' => 'dipinjam',
+                    'processed_by' => $staff->random()->id,
+                    'condition_notes' => 'Kondisi buku baik saat dipinjam.',
                 ]);
                 $book->decrement('available_stock');
             }
@@ -44,6 +47,8 @@ class LoanSeeder extends Seeder
                 'return_date' => Carbon::now()->subDays(3),
                 'actual_return_date' => Carbon::now()->subDays(3),
                 'status' => 'dikembalikan',
+                'processed_by' => $staff->random()->id,
+                'condition_notes' => 'Buku dikembalikan lengkap dan tidak ada kerusakan.',
             ]);
             // Tidak perlu decrement stock karena sudah kembali
         }
@@ -59,6 +64,8 @@ class LoanSeeder extends Seeder
                     'loan_date' => Carbon::now()->subDays(15),
                     'return_date' => Carbon::now()->subDays(5), // Batas 5 hari lalu
                     'status' => 'terlambat',
+                    'processed_by' => $staff->random()->id,
+                    'condition_notes' => 'Buku dipinjam dalam keadaan baik.',
                 ]);
                 $book->decrement('available_stock');
             }

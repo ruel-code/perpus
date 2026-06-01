@@ -8,47 +8,122 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        linear: {
+                            primary: "#533afd",
+                            "primary-hover": "#4434d4",
+                            "primary-focus": "#2e2b8c",
+                            ink: "#0d253d",
+                            "ink-muted": "#273951",
+                            "ink-subtle": "#64748d",
+                            canvas: "#f6f9fc",
+                            "surface-1": "#ffffff",
+                            "surface-2": "#f1f5f9",
+                            hairline: "#e3e8ee",
+                            "hairline-strong": "#cbd5e1"
+                        }
+                    },
+                    borderRadius: {
+                        xs: "4px", sm: "6px", md: "8px", lg: "12px", xl: "16px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f6f9fc;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out both; }
+        .animate-fadeIn { animation: fadeIn 0.8s ease-out both; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-gradient { background-size: 200% 200%; animation: gradientShift 4s ease infinite; }
+        .animate-delay-1 { animation-delay: 0.1s; }
+        .animate-delay-2 { animation-delay: 0.2s; }
+        .animate-delay-3 { animation-delay: 0.3s; }
+        .animate-delay-4 { animation-delay: 0.4s; }
+        .card-hover { transition: all 0.25s cubic-bezier(0.4,0,0.2,1); }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,55,112,0.1), 0 2px 6px rgba(0,55,112,0.04); }
+        input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px white inset !important; }
+    </style>
 </head>
-<body class="bg-indigo-50 min-h-screen flex items-center justify-center p-6">
-    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <div class="text-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-900">Registrasi Mahasiswa</h1>
-            <p class="text-gray-500">Buat akun baru untuk mulai meminjam</p>
+<body class="bg-linear-canvas text-linear-ink min-h-screen flex items-center justify-center p-4 antialiased relative overflow-hidden">
+    <div class="absolute top-0 inset-x-0 h-96 bg-gradient-to-tr from-[#533afd]/10 via-[#ea2261]/5 to-[#f5e9d4]/20 blur-3xl -z-10 animate-gradient"></div>
+    <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-[#533afd]/5 rounded-full blur-3xl -z-10 animate-float"></div>
+    <div class="absolute -top-20 -right-20 w-72 h-72 bg-[#ea2261]/5 rounded-full blur-3xl -z-10 animate-float" style="animation-delay: 2s;"></div>
+
+    <div class="bg-linear-surface-1 p-8 rounded-xl border border-linear-hairline w-full max-w-md shadow-[rgba(0,55,112,0.08)_0_8px_24px,rgba(0,55,112,0.04)_0_2px_6px] card-hover animate-fadeInUp">
+        <div class="text-center mb-8 animate-fadeInUp animate-delay-1">
+            <div class="w-14 h-14 bg-gradient-to-br from-linear-primary to-[#7a64ff] rounded-xl flex items-center justify-center mx-auto mb-4 text-white shadow-lg shadow-[#533afd]/20">
+                <i class="fas fa-user-plus text-2xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-linear-ink tracking-tight mb-1.5">Registrasi Mahasiswa</h1>
+            <p class="text-sm text-linear-ink-subtle">Buat akun baru untuk mulai meminjam</p>
         </div>
 
-        <form id="register-form" class="space-y-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                <input type="text" id="name" required class="block w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition">
+        <form id="register-form" class="space-y-4 animate-fadeInUp animate-delay-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Nama Lengkap</label>
+                    <input type="text" id="name" autocomplete="name" required class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">NIM</label>
+                    <input type="text" id="nim" required class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm">
+                </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">NIM</label>
-                <input type="text" id="nim" required class="block w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition">
+                <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">No. WhatsApp / Telepon</label>
+                <input type="text" id="phone_number" class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm" placeholder="Contoh: 081234567890">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Program Studi</label>
+                    <input type="text" id="study_program" class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm" placeholder="Teknik Informatika">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Email</label>
+                    <input type="email" id="email" autocomplete="email" required class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm">
+                </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="email" required class="block w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition">
+                <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Alamat</label>
+                <textarea id="address" rows="2" class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm" placeholder="Alamat tinggal lengkap"></textarea>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="password" required class="block w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Password</label>
+                    <input type="password" id="password" autocomplete="new-password" required class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-linear-ink-muted mb-1.5 uppercase tracking-wider">Konfirmasi Password</label>
+                    <input type="password" id="password_confirmation" autocomplete="new-password" required class="block w-full px-3.5 py-2.5 bg-white text-linear-ink border border-linear-hairline rounded-lg focus:border-linear-primary focus:ring-2 focus:ring-linear-primary/15 outline-none transition duration-200 text-sm">
+                </div>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                <input type="password" id="password_confirmation" required class="block w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition">
-            </div>
-
-            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-xl transition shadow-md">
+            <button type="submit" class="btn-ripple w-full bg-gradient-to-r from-linear-primary to-[#7a64ff] hover:from-linear-primary-hover hover:to-[#6956e8] text-white text-sm font-semibold py-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-lg hover:shadow-[#533afd]/20 focus:outline-none focus:ring-2 focus:ring-linear-primary/30 mt-2 active:scale-[0.98]" style="position:relative;overflow:hidden;">
                 Daftar Sekarang
             </button>
         </form>
 
-        <div class="mt-6 text-center">
-            <p class="text-gray-600 text-sm">Sudah punya akun? <a href="{{ route('login') }}" class="text-indigo-600 font-semibold hover:underline">Masuk</a></p>
+        <div class="mt-6 text-center border-t border-linear-hairline pt-6 animate-fadeInUp animate-delay-3">
+            <p class="text-linear-ink-subtle text-xs">Sudah punya akun? <a href="{{ route('login') }}" class="text-linear-primary font-medium hover:text-linear-primary-hover transition duration-150 hover:underline">Masuk</a></p>
         </div>
     </div>
 
@@ -56,7 +131,7 @@
         $('#register-form').submit(function(e) {
             e.preventDefault();
             const btn = $(this).find('button');
-            btn.prop('disabled', true).text('Memproses...');
+            btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...');
 
             $.ajax({
                 url: '/api/register',
@@ -67,7 +142,10 @@
                     password: $('#password').val(),
                     password_confirmation: $('#password_confirmation').val(),
                     nim: $('#nim').val(),
-                    role: 'mahasiswa'
+                    phone_number: $('#phone_number').val(),
+                    study_program: $('#study_program').val(),
+                    address: $('#address').val(),
+                    role: 'user'
                 },
                 success: function(response) {
                     localStorage.setItem('auth_token', response.data.access_token);
@@ -78,13 +156,16 @@
                         title: 'Registrasi Berhasil!',
                         text: 'Selamat bergabung, ' + response.data.user.name,
                         timer: 1500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        background: '#ffffff',
+                        color: '#0d253d',
+                        confirmButtonColor: '#533afd'
                     }).then(() => {
                         window.location.href = '/dashboard';
                     });
                 },
                 error: function(xhr) {
-                    btn.prop('disabled', false).text('Daftar Sekarang');
+                    btn.prop('disabled', false).html('Daftar Sekarang');
                     let msg = 'Terjadi kesalahan sistem';
                     if (xhr.responseJSON && xhr.responseJSON.errors) {
                         msg = Object.values(xhr.responseJSON.errors).flat().join('<br>');
@@ -94,7 +175,10 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal Registrasi',
-                        html: msg
+                        html: msg,
+                        background: '#ffffff',
+                        color: '#0d253d',
+                        confirmButtonColor: '#533afd'
                     });
                 }
             });

@@ -16,14 +16,20 @@ class FineSeeder extends Seeder
 
         foreach ($overdueLoans as $loan) {
             $dueDate = Carbon::parse($loan->return_date);
-            $overdueDays = Carbon::now()->diffInDays($dueDate);
+            $overdueDays = (int) Carbon::now()->diffInDays($dueDate);
             
             $status = $count < 3 ? 'paid' : 'unpaid';
+            $method = $status === 'paid' ? ($count % 2 === 0 ? 'Cash' : 'Transfer Bank') : null;
+            $payDate = $status === 'paid' ? Carbon::now()->subDays($count) : null;
 
             Fine::create([
                 'loan_id' => $loan->id,
+                'user_id' => $loan->user_id,
                 'amount' => $overdueDays * Fine::DAILY_FINE,
+                'days_late' => $overdueDays,
                 'payment_status' => $status,
+                'payment_method' => $method,
+                'payment_date' => $payDate,
             ]);
 
             $count++;

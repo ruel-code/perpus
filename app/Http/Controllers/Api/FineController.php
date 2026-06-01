@@ -15,18 +15,29 @@ class FineController extends Controller
 
     public function index()
     {
-        $fines = Fine::all();
+        $fines = Fine::with(['loan.user', 'loan.book', 'user'])->get();
         return $this->success(FineResource::collection($fines), 'Fines retrieved successfully');
     }
 
     public function show(Fine $fine)
     {
-        return $this->success(new FineResource($fine), 'Fine retrieved successfully');
+        return $this->success(new FineResource($fine->load(['loan.user', 'loan.book', 'user'])), 'Fine retrieved successfully');
     }
 
     public function update(UpdateFineStatusRequest $request, Fine $fine)
     {
-        $fine->update($request->validated());
+        $data = $request->validated();
+        if ($data['payment_status'] === 'paid') {
+            $data['payment_date'] = now();
+            if (empty($data['payment_method'])) {
+                $data['payment_method'] = 'Cash';
+            }
+        } else {
+            $data['payment_date'] = null;
+            $data['payment_method'] = null;
+        }
+
+        $fine->update($data);
         return $this->success(new FineResource($fine), 'Fine status updated successfully');
     }
 }

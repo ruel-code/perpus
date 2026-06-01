@@ -20,7 +20,10 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'nim' => 'nullable|string|unique:users',
-            'role' => 'nullable|string|in:mahasiswa,petugas,admin',
+            'phone_number' => 'nullable|string',
+            'study_program' => 'nullable|string',
+            'address' => 'nullable|string',
+            'role' => 'nullable|string|in:user,admin',
         ]);
 
         if ($validator->fails()) {
@@ -37,7 +40,10 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'nim' => $data['nim'],
-            'role' => $data['role'] ?? 'mahasiswa',
+            'phone_number' => $data['phone_number'] ?? null,
+            'study_program' => $data['study_program'] ?? null,
+            'address' => $data['address'] ?? null,
+            'role' => $data['role'] ?? 'user',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

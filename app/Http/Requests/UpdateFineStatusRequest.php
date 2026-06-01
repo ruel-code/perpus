@@ -15,6 +15,7 @@ class UpdateFineStatusRequest extends FormRequest
     {
         return [
             'payment_status' => 'required|in:paid,unpaid',
+            'payment_method' => 'nullable|string',
         ];
     }
 }

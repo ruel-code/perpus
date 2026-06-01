@@ -24,6 +24,8 @@ class Loan extends Model
         'return_date',
         'actual_return_date',
         'status',
+        'processed_by',
+        'condition_notes',
     ];
 
     /**
@@ -80,6 +82,14 @@ class Loan extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the staff member who processed the loan.
+     */
+    public function processedBy()
+    {
+        return $this->belongsTo(User::class, 'processed_by');
     }
 
     /**

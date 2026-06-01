@@ -16,6 +16,8 @@ class UpdateLoanStatusRequest extends FormRequest
         return [
             'actual_return_date' => 'nullable|date',
             'status' => 'required|in:dikembalikan',
+            'condition' => 'nullable|in:baik,rusak,hilang',
+            'condition_notes' => 'nullable|string',
         ];
     }
 }

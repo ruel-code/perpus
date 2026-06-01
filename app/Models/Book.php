@@ -16,14 +16,19 @@ class Book extends Model
      */
     protected $fillable = [
         'category_id',
+        'type',
         'title',
         'author',
         'publisher',
         'isbn',
+        'publish_year',
+        'shelf_location',
         'stock',
         'available_stock',
+        'price',
         'description',
         'cover_image',
+        'file_ebook',
     ];
 
     /**
